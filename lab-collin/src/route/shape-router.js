@@ -51,11 +51,11 @@ shapeRouter.delete('/api/shapes/:id', (request, response, next) => {
   return Shape.findByIdAndRemove(request.params.id)
     .then((shape) => { 
       if (!shape) {
-        logger.log(logger.INFO, 'DELETE - responding with a 404 status code - (!shape)');
+        logger.log(logger.ERROR, 'DELETE - responding with a 404 status code - (!shape)');
         return next(new HttpErrors(404, 'shape not found'));
       }
-      logger.log(logger.INFO, 'DELETE - responding with a 200 status code');
-      return response.json(shape);
+      logger.log(logger.INFO, 'DELETE - responding with a 204 status code');
+      return response.sendStatus(204);
     })
     .catch(next);
 });

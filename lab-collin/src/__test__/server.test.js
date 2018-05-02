@@ -65,7 +65,7 @@ describe('/api/shapes', () => {
     });
   });
   describe('DELETE /api/shapes', () => {
-    test('should respond with 200 if there are no errors', () => {
+    test('should respond with 204 if there are no errors', () => {
       let shapeToTest = null; // eslint-disable-line no-unused-vars
       return createShapeMock()
         .then((shape) => {
@@ -73,9 +73,7 @@ describe('/api/shapes', () => {
           return superagent.delete(`${apiURL}/${shape._id}`);
         })
         .then((response) => {
-          expect(response.status).toEqual(200);
-          expect(response.body.name).toEqual({});
-          expect(response.body.sides).toEqual({});
+          expect(response.status).toEqual(204);
         });
     });
     test('should respond with 404 if a shape is not found', () => {
