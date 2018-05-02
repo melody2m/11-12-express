@@ -64,4 +64,26 @@ describe('/api/shapes', () => {
         });
     });
   });
+  describe('DELETE /api/shapes', () => {
+    test('should respond with 200 if there are no errors', () => {
+      let shapeToTest = null; // eslint-disable-line no-unused-vars
+      return createShapeMock()
+        .then((shape) => {
+          shapeToTest = shape;
+          return superagent.delete(`${apiURL}/${shape._id}`);
+        })
+        .then((response) => {
+          expect(response.status).toEqual(200);
+          expect(response.body.name).toEqual({});
+          expect(response.body.sides).toEqual({});
+        });
+    });
+    test('should respond with 404 if a shape is not found', () => {
+      return superagent.get(`${apiURL}/777778??`)
+        .then(Promise.reject)
+        .catch((response) => {
+          expect(response.status).toEqual(404);
+        });
+    });
+  });
 });
